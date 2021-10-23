@@ -33,28 +33,33 @@ comm --nocheck-order  -1 -3 basedusers.txt localusers.txt >> unbelovedusers.txt
 comm --nocheck-order  -2 -3 basedusers.txt localusers.txt >> addusers.txt
 echo "That info has been placed carefully and tenderly into respective files."
 
-#deleting users that need to be deleted
-echo "time to start reading files!"
-#file= ~/scripttime/unbelovedusers.txt
-#for i in $file read -r line
-#do 
-  #  echo "I'm reading a line."
-  #  deluser "$line"
-  #  echo "$line has been forcibly removed from the os!"
-#done
-file="/home/cy/scripttime/unbelovedusers.txt"
-echo "i recognize that variable :)"
-while IFS= read -r line
-do
-    echo "i started looking :D"
-    echo "i'm looking at $line"
-    deluser "$line" > /dev/null
-done < "$file"
+echo "Is the 'delete users' information correct?"
+read -p "y/n: " varcool
+if [ $varcool == "y" ]
+then
+    file="/home/cy/scripttime/unbelovedusers.txt"
+    echo "i recognize that variable :)"
+    while IFS= read -r line
+    do
+        echo "i started looking :D"
+        echo "i'm looking at $line"
+        deluser "$line" > /dev/null
+    done < "$file"
+else
+    echo "sadness"
+fi
 
-#file="/home/cy/scripttime/addusers.txt"
-#while IFS= read -r line
-#do 
-    #echo "i started looking, bro!"
-    #echo "i'm looking at $line"
-    #adduser "$line"
-#done < "$file"
+echo "Is the add users information correct?"
+read -p "y/n: " varcool
+if [ $varcool == "y" ] 
+then
+    file2="/home/cy/scripttime/addusers.txt"
+    while IFS= read -r line
+    do 
+        echo "i started looking, bro!"
+        echo "i'm looking at $line"
+        useradd "$line"
+    done < "$file2"
+else
+    echo ">:("
+fi
